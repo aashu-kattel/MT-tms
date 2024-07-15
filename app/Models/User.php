@@ -9,6 +9,16 @@ use Illuminate\Notifications\Notifiable;
 
 class User extends Authenticatable
 {
+    public function isOnline()
+{
+    return $this->last_login_at !== null && $this->last_login_at->gt(now()->subMinutes(5));
+}
+
+    public function tasks()
+{
+    return $this->hasMany(Task::class);
+}
+
     use HasFactory, Notifiable;
 
     /**
@@ -45,3 +55,6 @@ class User extends Authenticatable
         ];
     }
 }
+
+
+
